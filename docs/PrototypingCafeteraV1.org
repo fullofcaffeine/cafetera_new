@@ -1,0 +1,421 @@
+:PROPERTIES:
+:ID:       5501670d-1098-4bdd-83a3-bd7794de178f
+:END:
+#+title: PrototypingCafeteraV1
+#+filetags: :project:focus:
+
+* [[id:1ec8ae38-d4e6-498b-99b8-80cb05c7bd4b][Cafetera.io]]
+* [[roam:Cafetera]]   
+* [[id:bc2d4905-a138-45d0-98de-c6ff90f1b6c9][FullOfCaffeine(Co.)]]
+* [[id:5db50eb0-4f87-4f8a-bb70-430ec7bc191c][IntegratingPhoenixElixirWithNodejsAsUIFramework]]
+
+
+
+* Codename: FullOfCaffeine Platform/Coffeebase
+Actual marketing name: Cafetera.io
+
+Part of a greater effort to simplify and optimize my (business) life, which will
+also include the CaffeineOS concept (cafetera-roaster? but that's going to be an
+open source thing to compete with omakub, not directly part of this first
+iteration for Cafetera.
+
+Its my own supabase. Why? Because I want a more flexible and personal platform,
+while also being able to introduce my own features (like SCM, Ansible support
+etc).
+
+Supabase is a big inspiration and I might use many of its open-source components.
+
+
+** Other inspiration/things to try in the longterm/someday/maybe
+- v0, PoC creator via LLM (self hosted version of Devin)
+- LLM component - provide a way to ship a powerful LLM in my own infra, support
+  AWS and Digitalocean to start with (maybe Heztner?)
+
+* Self-hostable BaaS and PaaS with some Google Workspace aspects
+
+
+Cafetera is a platform to quickly build and ship apps to. It has many aspects
+and aims at being as flexible as possible but with opinionated sensible defaults
+for quickly deploying an app, while allowing quick creation and
+deployment of apps:
+
+Vision: reduce/eliminate friction for shipping new businesses. Save time by
+automating and packaging ready-to-use (or easy to modify) solutions for online
+business aspects, things that are available but spread around today. Don't sell
+as a simple PaaS/BaaS, but as a platform for quickly shipping and managing
+online businesses.
+
+Provide a way to extend my businesses into any of the branches. For example, the
+default "blueprint" will create/connect to an yt account for analytics/mkt to be
+managed from the app. The functionality will be basic, and I might plug a more
+specialized app for yt creators that can be purchased separately and use
+independently and or with Cafetera, too, so hopefully I'm creating a platform
+that I can leverage later for more businesses/niches. And of course, the new app will
+have used Caftera, too for its creation/management :)
+
+** Vercel aspect (PaaS, infra management, but hostable) + Google Workspace (to some extent)
+Other similar solutions: Coolify
+
+There are solutions out there, vercel, coolify, but Cafetera aims to be more
+pragmatic and business-oriented (i.e analytics, marketing built in).
+
+Keywords: vps, docker, cloudfare, firewall, dns, email (replace gmail, use
+Nextcloud - this is optional for each domain).
+
+*** Infra: App creation and management, deploy management
+Similar solution/insiration: Kamal from Basecamp
+
+DNS, SSL certs, cloudfare/firewall
+
+
+** Supabase aspect (BaaS, but hostable)
+Other similar solutions: Supabase
+
+** Web/CLI based. Manage products/projecst/web properties (not sure what to call it yet, read on for more details) via web or CLI.
+
+* User stories (focusing on the web GUI for now)
+This doesn't define the implementation yet, which we'll dive into later.
+
+** Self-hosted vs cloud
+
+Cafetera can be partially used in cloud mode (subscriptio-based, cheaper) or
+bought to e self hosted.
+
+The cloud version is the best way to start. You can create a new account,
+connect your cloud provider and
+
+>>>>> This makes an important distiction here: I think this product is turning to not
+be a boilerplate anymore, but a PaaS/BaaS for solopreneurs. The boilerplate is
+still important but can be sold separately, so let's focus on the Cafetera
+Platform first, then look into the Caftera-blend(s) which will also be extracted
+(at least one of them!) from the Cafetera Platform (so that you can create your
+own Cafetera platform as well, host it, create other apps with it, etc) <<<<<
+
+This distinction is important as I don't want to overwhelm myself with
+developing two big projects at once. Later, I'll split the projects, this is the
+cafetera-roaster (migth not be the definitive name) which is the successor to my
+fullofcaffeine-scm that I developed circa 2018-2019. This is a way for met o
+sell this and also not start with "yet-another-boilerplate" which would look bad
+in the solopreneur community considering I'm bootstrapping my biz now; now, a
+boilerplate as a second product is mostly fine.
+
+
+Let's first start with the cloud-based stories, then we'll write the ones for
+the self-hosted, or just take note on the differences. I'll start with the cloud
+version and then later think on a pricing/biz model for selling the actual
+source as a boilerplate for a self-hosted Vercel/Supabase. No goal of this being
+open-source at the moment.
+
+** Setup, new account
+1. User creates a new account in cafetera.io. It asks for a domain (for now domain
+registration is out of question).
+
+let's say the domain (or app) is fullofcaffeine.com.
+
+1. A new product/project is created, fullofcaffeine.com, the user can choose to
+   host the email+collab nextcloud and other options (see below) there, so at least a VPS is required.
+
+2. Cafetera the asks for info about the required servers. IP ssh private key or
+   password, or a way to connect to the target API (digitalocean?). See how
+   Kamal does it.
+
+3. You can choose a blend for the app blend now (boilerplate):
+
+4. Each project consists of (infra blend)
+   - the app (use a blend or just manual) recipe
+     - the app is usually a monolithic repo containing a "blend", which
+       basically a boilerplate. It also might have metadata for Cafetera to know
+       how to manage its deployment and it should also have support code for the
+       domain(s) setup, the SSL cert, etc.
+     - the blend can be chosen with different components. The source will mostly
+       always be part of the same monolith repoto keep it easier to manage, but
+       deployment might be to other servers (e.g llm, scraping, mailing list)
+   - nextcloud (optional)
+   - mailing list manager (optional)
+     - https://github.com/dittofeed/dittofeed or mautic
+   - blog/marketing site
+     - wordpress
+     - static solution (alternative to wordpress, use ghost?)
+   - server analytics (need more brainstorm here, what solutions?, might differ
+     depending on the app blend)
+   - traffi/mkt analytics (need more brainstorm here, Google or any other solution?)
+   - other mkt-related provisioning of accounts: yt (if not yet) (ol aspect here)
+
+
+***  Integrations
+
+A neat idea that can add a lot of value is to have this data somehow available to all apps that make up the
+suite, while still allowin the usage of existing best-tool-for-the-job solutions
+in the market.
+
+For example, whenever a new lead is captured, it might be nice to also capture
+it in the central cfetera database. This cna lead the way to use other tools
+later.
+
+i think the best approach for this is a wrapper approach. The API to collect
+leads, as an example, is the least common denominator from Caftera, e.g
+cafetera.io/apps/x/leads/new. Then, we'll have connectors that will feed the
+data to the right target app. A connector can be bidirectional, for example,
+later we might translate the Mautic data to a more high level data in cafetera,
+so that other solutions can be used, too. My goal is to later develop a Mautic
+replacement, and I'd like to be abel to migrate the data, so this connector
+would help with that. But that's an advanced feature that won't be available in
+the beginning, though cafetera should abstract in its API all inner APIs/apps
+with the goal of not being vendor-locked-in to a single solution.
+
+Since the data is captured via Cafetera, that means that:
+- other apps inside the project can query it
+- we need to keep it in sync and a connector will be needed to be run
+  periodically.
+- not all data from the target apps will be synced, but only the data deemed
+  important to be kept by Cafetera.
+
+Would that make sense?
+
+* Architecture
+** cafetera-hub / roaster
+*** The Phoenix "glue"/backend app/orchestrator
+**** Provides the main abstraction for everything, the API
+**** Implements the cafetera web/mobile interface
+**** CLI
+***** Could be in a separate repo
+***** Provides a CLI interface for the API
+**** Should provide the logic to configure blends (boilerplates) components
+**** A funny aspect is that it should be developed using the fullofcaffeine-blend(v1) blend. So, I should focus on the blend first, work on the necessary tooling that is essential and focus on developing the hub with the blend while I develop the blend. Does that make sense? There are other blend components (beans) that I can focus on later.
+** cafetera-blends (recipes/components/boilerplates)
+A blend is a mix of beans (components). A component can be an internal part of a
+monolith repo or be in a separate repo. A component can be deployed and have SCM
+(roaster) metadata. For example, a blend might be configured to use the Tailwind
+UI toolkit component which roaster will then setup as part of the monolith repo,
+and or the user might choose to add a scraper component. The scraper component
+implements a basic scraping server that can be further extended later, and while
+it might be added as part of the same github repo, it's by default deployed to
+another server(s).
+
+
+*** fullofcaffeine-blend(v1): phoenix backend with a mixed liveview+react frontend
+**** PWA+mobile via hybrid (https://capacitorjs.com/)
+***** The cafetera API
+This will be an important aspect but I'm not sure how it will be implemented
+yet. The API will provide an easy way to expose/consume whatever the user wants
+from the inside/outside.
+
+What do I mean by inside/outside?
+
+Well, the hub is a BEAM Elixir Pheonix app. It will encapsulate other components
+and provide an API for them like I mentioned in the "Integrations" section
+above.
+
+This API should be the common vocab/knowledge for the app, so, it should be easy
+to implement. When used internally from the Phoenix app in Elixir, no transport
+should be used, it should just fallback to plain elixir code in the same process
+space. When used across processes, then there will be two options:
+
+- the custom Elixir<>TS tRPC implementation
+- graphql for the rest
+- plain rest
+
+This is a key part of the stack and one of the main value propositions so the
+absraction should be easy to use, the source of truth is Elixir and then the
+tRPC, graphql and rest endpoints should be autogenerated. Well, the rest one
+might be augmented maybe, it could be generated in source and the user could
+then tweak it/extend it. What do you think?
+
+The other main asepct of this API is the intergation with beans. Each bean adds
+new resources to this API, under a "Beans" namespace (? TBD). For example, the
+Mautic bean, the mailing list/marketing app consists of:
+
+- A recipe on how to download and install the app -- this can be a thin Elixir
+  DSL that calls, managed and runs an Ansible playbook. 
+- A component that is loaded by the backend and adds the APIs to consume and
+  control Mautic.
+
+  Elixir:
+
+  Beans.API.MarketingAutomation.leads.create (or something like that)
+
+  This is a module that is added by the bean when it's installed, probably as an
+  Hex package?
+
+  REST:
+
+  PUT /beans/crm/leads (uses the Elixir logic under the cover)
+
+  GraphQL:
+
+  mutation BeanMarketingAutomationCreateNewLead( ... ) {} // also relies on the
+  Elixir impl above
+
+  tRPC:
+
+  Autogenerated, the goal is to make it trivial to use it from the nodejs/JS
+  React views (via live_react). This is the way we will communicate with the
+  React frontend when it's rendered via live_react.
+
+  
+Why abstract the API?
+
+Well, my goal is to make it easy to leverage existing solutions while
+potentializing them through easy integration. For example, the blend
+(boilerplate) has solve common online business problems like marketing
+automation, blogging, landing pages, and these components ideally should be able
+to share data somehow.
+
+Example, let's say the user configure the marketing-site bean to be wordpress.
+We'll have a SCM recipe to set it. The default way its implemented is to use
+wordpress as a backend or a headless frontend. One of the ways to set this up is
+to have this marketing site in the main domain, say myapp.com (while the app is
+in app.myapp.com).
+
+The fullofcaffeine-blend will also create a hub.myapp.com which is the cafetera
+API. A thin wordpress plugin will allow us to consume this API easily, with
+focus on allowing easy integration with the crm to capture leads for example.
+
+The tooling
+
+The engine for the SCM, the autogeneration of trpc is part of the cafetera hub.
+Everything that can be shared across blends should be exposed as packages that
+can be shared across blends.
+
+
+***** Boilerplate features
+These are internal beans extend the app boilerplate with patterns that set it
+apart from a simple skeleton.
+- Authentication with integration with the CRM (i.e users created as leads might
+  later be "promoted" to full users). Auth should also support SSO with google
+  etc, and also oauth for the cafetera API (or JWT? What makes more sense?).
+- user/customer management: While Mautic is more specialized, a hub view of
+  customers that allow to open each user in Mautic (or any other future
+  integration/bean). It also shows some satistics from Mautic, Stripe, etc
+  aggregated there. This is part of the CRM bean.
+- theming: the app focus on react via live_react, using https://mantine.dev/ for
+  UI/theming needs. It provides a basic GUI skeelton for the common patterns,
+  auth, recover password, the management screens, and also common layouts that
+  are fully responsive. The layout can be chosen when the blend is being
+  configured (e.g two columns with a header footer, and other common layout for
+  differnet kinds of apps - help me brainstorm some common ones).
+- Onboarding: components that make it easy to make an onboarding flow for the
+  app (optional)
+- PWA support - automatic mobile support.
+- Capacitor interation that relies on the PWA to estend the mobile features (optional)
+- Real time chat bean -- leveraging the BEAM backend, a basic chat and prsence
+  implementation for users which also includes a basic GUI for it (optional).
+  It should implement versatile React components for the chat that are
+  expandable/collapsable to allow for flexible apps. In fat, the skeleton should
+  allow for such widgety layouts.
+
+  This could be used to implement apps that need a chat app, like CRMs, etc.
+
+- Real time collaboration beans
+  - Text: https://tiptap.dev/docs/collaboration/getting-started/overview
+  - Image: https://github.com/excalidraw/excalidraw or tldraw as
+    customized/simplified and well integrated components
+  - Video (webrtc): https://www.videosdk.live/developer-hub/webrtc/webrtc-react
+
+
+  Each of these should include basic GUIs and data model that can be easily customized further
+  and is integrated with the data schema. For example, a collaborative text
+  might belong to a user or more (i.e the author(s)) and be edited by multiple
+  users. Same for the diagam/image.
+
+  For video, a video session is created (?) and can consist of  multiple users.
+  A videosession might be recorded and transcribed (via some API somewhere?)
+
+- Payment Gateway bean/abstration
+  - An abstraction over payment gateways, allows to create payments,
+    subscriptions, prorate, refund, create promotions with credits, supports
+    configuring plans/tiers and ways to manage them over time (i.e if plan /
+    tiers change, it should allow grandfathering of users or provide ways to
+    migrate with temporary discounts, etc).
+
+    The underlyig dfeault gateway is Stripe, but more  "connectors" will be added
+    later so that it's easy to support multiple backends in case there's a
+    problem with any of them, so that the payment flow doesn't stop. It could
+    also support splitting of funds to multiple backends, though this is an idea
+    for the long term.
+
+   
+  
+  
+
+
+**** Down-to-earth UI toolkit, layouting and theming
+***** [[roam:TailwindCSS]] or [[roam:Bootstrap]] based skeletos :bean:
+**** Scraper bean (later, optional, need braistorm): A basic but extendable scraper for apps that need data from websites. Should deal with common scenarios and use Playwright. The language could be whatever langauge has the best support for its API, be it JS or Python. :bean:
+**** LLM bean: this is importnat as more apps start implementing AI-related functionalities. The LLM bean focuses on efficiently deploying a LLM of choice to the cloud and providing a secure API for consuming it, probably routed via the hub (as in, with some quality of life abstractions for the app to consume it) ..
+**** GenerativeImageAI bean: similar to the LLM bean, this ships and integrates an image generation model, probably Flux or StableDiffusion. :bean:
+**** marketing-site bean: A recipe to setup the marketing site for the app. Can be configured as a subdomain or as a subpath of the domain. Uses headless wordpress with a script to re-generate a static site upon publishing. Might allow for using something else other than wordpress later on.
+It'd be nice to explore using GenAI to generate the marketing site based on a
+description fo the app + rest of the source code. I'm fine using existing
+solitions via API if avaialble, like v0, Claude, or anything else that can is
+design aware
+generate a beautiful landing page + SEO optiizations that can be easily
+extendable later. The interface to this would be part of the hub web and or CLI
+tools, too.
+**** SSO across external beans: external beans should ideally share the same cafetera-hub session. Let's take an example of Mautic and Wordpress. These will not be exposed to the public, and the user has to login to cafetera-hub and then be able to access these, e.g:
+- go to crm.myapp.com (mautic), receive a 404 or 403
+- go to site.myapp.com (wordpress), recieve a 404 or 403
+- login via hub.myapp.com (cafetera-hub), session created
+- go to crm.myapp.com (mautic), mautic now renders normally
+- go to site.myapp.com (wordpress), wordpress now renders normally
+
+
+
+** cafetera-experimenter
+
+Is part of the hub, in fact, part of the API and extends te scM to quickly
+deploy jamstack and or Nextjs apps (in the future other apps) that can consume
+the backend via the hub (instead of using the live_react integration).
+
+The challenge here is how to deal with data migration/schema creation. How does
+supabase does it? It should be trivial, easier than if I use the
+
+The NextJS and or jamsstack blend will be a varation of the fullofcaffeine-blend
+boilerplate (see above, TBD) with the same components but setup to consume the
+data via the API (via the tRPC).
+
+Maybe look into integrating https://githubnext.com/projects/github-spark?
+
+
+** cafetera-hub - web interface over the core/CLI tools. Provides dashboards, diagrams (server topology), allows aggregating data from the apps registered (like users, payment,) and is focused on monitoring and KPIs, as well as might add some marketing and support features across all apps.
+
+
+** cafetera-core and CLI interface
+
+
+** The bean feature / extension model (plugin system)
+Beans are self-contained packages with:
+
+Schema/database changes
+Services/business logic
+API endpoints
+UI components
+Infrastructure requirements
+Assets
+Deployment recipes
+
+Aspects to consider:
+
+Feature-based composition instead of monolithic beans
+Clearer dependencies through feature requirements
+Easier to create simple beans that do one thing
+Better validation of compatibility
+More flexible extension points
+Easier testing as features are isolated
+Better reusability of features across beans
+
+Goals:
+
+Make it easier to create new beans
+Provide better guarantees about compatibility
+Allow for more granular control of functionality
+Simplify testing and maintenance
+Make the system more extensible
+
+* [[roam:Marketing]]
+
+How to sell it?
+
+** Basic - sell scm or boilerplate, straighforward
+** Advanced - allow configuration of "beans" to produce a custom boilerplate and SCM definition
+ Price will depend on the beans chosen, etc
